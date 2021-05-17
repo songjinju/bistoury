@@ -47,7 +47,6 @@ public class PidByPsHandler extends AbstractPidHandler implements PidHandler {
 
     private static final String TOMCAT_USER = META_STORE.getStringProperty("tomcat.user", "tomcat");
     private static final String TOMCAT_COMMAND = META_STORE.getStringProperty("tomcat.command", "/home/java/default/bin/java");
-    private static final String PS_COMMAND = META_STORE.getStringProperty("ps.command", "ps aux | grep java");
 
     private static final int USER_INDEX = 0;
     private static final int PID_INDEX = 1;
@@ -96,7 +95,7 @@ public class PidByPsHandler extends AbstractPidHandler implements PidHandler {
 
     private static String getPsInfo() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try (ClosableProcess process = ClosableProcesses.wrap(new ProcessBuilder("/bin/sh", "-c", PS_COMMAND).redirectErrorStream(true).start());
+        try (ClosableProcess process = ClosableProcesses.wrap(new ProcessBuilder("/bin/sh", "-c", "ps aux | grep java").redirectErrorStream(true).start());
              InputStream inputStream = process.getInputStream()) {
             ByteStreams.copy(inputStream, outputStream);
             return outputStream.toString("utf8");
