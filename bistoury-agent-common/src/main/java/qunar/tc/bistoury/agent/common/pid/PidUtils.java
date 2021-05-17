@@ -73,7 +73,7 @@ public class PidUtils {
             int pid = handler.getPid();
             logger.info("get pid by {} success, pid is {}", handler.getClass().getSimpleName(), pid);
             if (pid > 0) {
-                logger.info("get pid by {} success, pid is {}", handler.getClass().getSimpleName(), pid);
+//                logger.info("get pid by {} success, pid is {}", handler.getClass().getSimpleName(), pid);
                 return pid;
             }
         }
