@@ -23,6 +23,7 @@ import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qunar.tc.bistoury.agent.common.pid.impl.PidByJpsHandler;
+import qunar.tc.bistoury.agent.common.pid.impl.PidByPsApplicationNameHandler;
 import qunar.tc.bistoury.agent.common.pid.impl.PidByPsHandler;
 import qunar.tc.bistoury.agent.common.pid.impl.PidBySystemPropertyHandler;
 
@@ -45,6 +46,8 @@ public class PidUtils {
     private static List<PidHandler> initPidHandler() {
         List<PidHandler> handlers = Lists.newArrayList();
 
+        handlers.add(new PidByPsApplicationNameHandler());
+
         handlers.add(new PidBySystemPropertyHandler());
 
         if (Boolean.parseBoolean(System.getProperty("bistoury.pid.handler.jps.enable", "true"))) {
@@ -62,7 +65,7 @@ public class PidUtils {
         Collections.sort(handlers, new Comparator<PidHandler>() {
             @Override
             public int compare(PidHandler o1, PidHandler o2) {
-                return Integer.compare(o1.priority(), o2.priority());
+                return Integer.compare(o2.priority(), o1.priority());
             }
         });
         return ImmutableList.copyOf(handlers);
