@@ -21,6 +21,7 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.taobao.middleware.logger.Logger;
+import org.slf4j.LoggerFactory;
 import qunar.tc.bistoury.attach.arthas.instrument.InstrumentClient;
 import qunar.tc.bistoury.attach.common.BistouryLoggger;
 import qunar.tc.bistoury.attach.file.FileOperateFactory;
@@ -46,6 +47,8 @@ public class AppConfigClient implements InstrumentClient {
 
     private static final Logger logger = BistouryLoggger.getLogger();
 
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(AppConfigCommand.class);
+
     private static final String DEFAULT_EXCLUSION_SUFFIX_LINE = "class,vm,css,js,jar";
 
     private static final String POINT = ".";
@@ -70,6 +73,7 @@ public class AppConfigClient implements InstrumentClient {
         } catch (Throwable e) {
             logger.error("", "app config client init error", e);
         }
+        log.info("AppConfigClient uri = {}", Paths.get(theUri.toString()));
         uri = theUri;
     }
 
@@ -88,6 +92,7 @@ public class AppConfigClient implements InstrumentClient {
         final Set<String> exclusionFile = getExclusionFile();
         List<FileBean> webAppConfigFiles = FileOperateFactory.listFiles(exclusionFileSuffix, exclusionFile, Paths.get(uri.toString()).getParent().toString());
         List<FileBean> tomcatConfigFiles = FileOperateFactory.listFiles(exclusionFileSuffix, exclusionFile, BASE_PATH + "/conf");
+        log.info("AppConfigClient BASE_PATH = {}", Paths.get(BASE_PATH));
         result.addAll(webAppConfigFiles);
         result.addAll(tomcatConfigFiles);
         for (FileBean fileBean : result) {
