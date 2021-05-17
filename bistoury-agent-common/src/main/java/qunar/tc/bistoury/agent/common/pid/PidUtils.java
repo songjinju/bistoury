@@ -71,6 +71,7 @@ public class PidUtils {
     public static int getPid() {
         for (PidHandler handler : PID_HANDLERS) {
             int pid = handler.getPid();
+            logger.info("get pid by {} success, pid is {}", handler.getClass().getSimpleName(), pid);
             if (pid > 0) {
                 logger.info("get pid by {} success, pid is {}", handler.getClass().getSimpleName(), pid);
                 return pid;
