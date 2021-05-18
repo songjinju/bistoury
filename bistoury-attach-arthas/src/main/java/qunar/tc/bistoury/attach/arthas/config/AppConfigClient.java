@@ -81,6 +81,7 @@ public class AppConfigClient implements InstrumentClient {
      * @return
      */
     public synchronized List<FileBean> listAppConfigFiles() {
+        logger.info("listAppConfigFiles");
         filesPath = new ArrayList<>();
         if (uri == null) {
             return Collections.emptyList();
@@ -138,5 +139,9 @@ public class AppConfigClient implements InstrumentClient {
     @Override
     public synchronized void destroy() {
         filesPath.clear();
+    }
+
+    public URI getUri() {
+        return uri;
     }
 }

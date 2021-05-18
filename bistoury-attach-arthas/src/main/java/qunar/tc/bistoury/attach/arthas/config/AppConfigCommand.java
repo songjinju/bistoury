@@ -30,6 +30,7 @@ import qunar.tc.bistoury.common.CodeProcessResponse;
 import qunar.tc.bistoury.common.TypeResponse;
 import qunar.tc.bistoury.common.URLCoder;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class AppConfigCommand extends AnnotatedCommand {
 
     @Override
     public void process(CommandProcess process) {
-        logger.info("receive app config command");
+        logger.info("receive app config command1111");
         CodeProcessResponse<List<FileBean>> response = new CodeProcessResponse<>();
         TypeResponse<List<FileBean>> typeResponse = new TypeResponse<>();
         typeResponse.setType(BistouryConstants.REQ_APP_CONFIG);
@@ -64,6 +65,7 @@ public class AppConfigCommand extends AnnotatedCommand {
     }
 
     private List<FileBean> getAppConfig(final AppConfigClient client) {
+        logger.info("getAppConfig1，uri={}", Paths.get(client.getUri().toString()).getParent().toString());
         List<FileBean> files = client.listAppConfigFiles();
         return files;
     }
